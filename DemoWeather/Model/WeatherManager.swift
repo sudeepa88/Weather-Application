@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import CoreLocation
-   
+import CoreLocation   
 
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
@@ -39,6 +38,7 @@ struct WeatherManager {
                 
                 if error != nil {
                     //print(error!)
+                   
                     delegate?.didFailWithError(error: error!)
                     return
                 }
@@ -75,9 +75,11 @@ struct WeatherManager {
             //getConditionName(weatherId: id)
         } catch {
            // print(error)
+            //print("Printing the error")
             delegate?.didFailWithError(error: error)
             return nil
         }
     }
-    
+   
+     
 }

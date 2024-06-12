@@ -193,6 +193,8 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
         // Use searchTextField.text to get the weather for that city
         if let city = searchTextField.text {
             weatherManager.fetchWeather(cityName: city)
+        } else {
+            print("Here is an error")
         }
         searchTextField.text = ""
         print("Entering here")
@@ -209,7 +211,19 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherManagerDeleg
         print("Printing from weather view controller",weather.temperature)
     }
     func didFailWithError(error: Error) {
+        //print("The mistake may be here ")
+
         print(error)
+        DispatchQueue.main.async {
+                self.displayWarning(message: "Enter a valid city name")
+            }
+    }
+    
+    private func displayWarning(message: String){
+        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.view.tintColor = .red
+        present(alert, animated: true, completion: nil)
     }
 }
 // MARK: - CLLocationManagerDelegate
@@ -227,6 +241,7 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
+        
         print(error)
     }
 }
